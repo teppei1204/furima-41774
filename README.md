@@ -18,13 +18,11 @@
 
 |    Column         |    Type    | Options     |
 | ----------------- | ---------- | ----------- |
-| first_name        |   string   | null: false |
-| last_name         |   string   | null: false |
 | city              |   string   | null: false |
 | user_id           | references | null: false, foreign_key: true|
 | phone_number      |   string   | null: false |
-| prefecture        |   string   | null: false |
-| building_name     |   string   | null: false |
+| prefecture_id     |   string   | null: false |
+| building_name     |   string   |             |
 | post_code         |   string   | null: false |
 | address           |   string   | null: false |
 
@@ -35,8 +33,8 @@
 
 |  Column   |    Type    | Options     |
 | --------- | ---------- | ----------- |
-|  user_id  | references | null: false, foreign_key: true |
-|  card_id  |   string   | null: false |
+|  user     | references | null: false, foreign_key: true |
+|  card_id  |   string   | null: false, foreign_key: true |
 
 - belongs_to : user
 - belongs_to : destination
@@ -48,12 +46,13 @@
 | ------------------ | ---------- | ----------- |
 | name               |   string   | null: false |
 | price              |   integer  | null: false |
-| description        |   string   | null: false |
-| shipping_cost      |   string   | null: false |
-| shipping_days      |   string   | null: false |
+| description        |    text    | null: false |
+| shipping_cost_id   |   integer  | null: false |
+| shipping_days_id   |   integer  | null: false |
 | shipping_id        |   integer  | null: false |
-| user_id            |   integer  | null: false, foreign_key: true |
+| user               | references | null: false, foreign_key: true |
 | prefecture_id      |   integer  | null: false |
+| image              |   string   | null: false |
 
 - has_one : card
 - belongs_to : user
