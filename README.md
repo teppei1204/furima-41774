@@ -36,7 +36,7 @@
 |  Column   |    Type    | Options     |
 | --------- | ---------- | ----------- |
 |  user     | references | null: false, foreign_key: true |
-|  product  |   string   | null: false, foreign_key: true |
+|  product  | references | null: false, foreign_key: true |
 
 - belongs_to : user
 - has_one : destination
