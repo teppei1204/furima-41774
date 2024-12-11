@@ -8,7 +8,7 @@
 | first_name           | string | null: false |
 | last_name            | string | null: false |
 | read_first           | string | null: false |
-| read_last            |  date  | null: false |
+| read_last            | string | null: false |
 | birth_day            |  date  | null: false |
 
 ### Association
@@ -21,7 +21,7 @@
 |    Column         |    Type    | Options     |
 | ----------------- | ---------- | ----------- |
 | city              |   string   | null: false |
-| card_id           | references | null: false, foreign_key: true|
+| card              | references | null: false, foreign_key: true|
 | phone_number      |   string   | null: false |
 | prefecture_id     |   integer  | null: false |
 | building_name     |   string   |             |
@@ -54,7 +54,7 @@
 | shipping_id        |   integer  | null: false |
 | user               | references | null: false, foreign_key: true |
 | prefecture_id      |   integer  | null: false |
-| condition_id          |   integer  | null: false |
+| condition_id       |   integer  | null: false |
 
 - has_one : card
 - belongs_to : user
