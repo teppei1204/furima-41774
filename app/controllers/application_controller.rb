@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  before_action :authenticate_item!, except: :index
+  before_action :authenticate_item!
   before_action :basic_auth
 
   private
