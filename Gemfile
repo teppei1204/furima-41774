@@ -69,8 +69,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
-  group :production do
-    gem 'pg'
-    gem 'devise'
-  end
 end
+group :production do
+  gem 'pg'
+end
+gem 'devise'
