@@ -71,5 +71,6 @@ group :test do
   gem "webdrivers"
   group :production do
     gem 'pg'
+    gem 'devise'
   end
 end
