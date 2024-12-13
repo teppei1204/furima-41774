@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  has_many :items
-
   # バリデーションの追加
   validates :nick_name, presence: true
   validates :last_name, presence: true
