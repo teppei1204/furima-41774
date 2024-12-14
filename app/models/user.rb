@@ -18,7 +18,7 @@ class User < ApplicationRecord
   private
 
   def password_complexity
-    return if password.nil? || password.match(/^(?=.*[a-zA-Z])(?=.*\d).{6,}$/)
+    return if password.match?(/\A(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}\z/)
 
     errors.add :password, 'must include at least one letter and one digit'
   end
