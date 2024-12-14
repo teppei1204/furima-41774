@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :user do
-    nick_name { Faker::Name.name }
-    first_name { Faker::Name.first_name }
-    last_name { Faker::Name.last_name }
+    nick_name { 'テストユーザー' }
+    first_name { '一郎' }
+    last_name { '山田' }
     read_first { 'タロウ' }
     read_last { 'ヤマダ' }
     birth_day { Faker::Date.birthday(min_age: 18, max_age: 65) }
