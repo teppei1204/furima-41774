@@ -49,16 +49,66 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Birth day can't be blank")
       end
 
-      it 'read_firstがカタカナでない場合無効であること' do
-        @user.read_first = 'Tarou'
+      it 'read_firstが空では登録できないこと' do
+        @user.read_first = ''
         @user.valid?
-        expect(@user.errors.full_messages).to include('Read first is invalid')
+        expect(@user.errors.full_messages).to include("Read first can't be blank")
       end
 
-      it 'read_lastがカタカナでない場合無効であること' do
-        @user.read_last = 'Yamada'
+      it 'read_lastが空では登録できないこと' do
+        @user.read_last = ''
         @user.valid?
-        expect(@user.errors.full_messages).to include('Read last is invalid')
+        expect(@user.errors.full_messages).to include("Read last can't be blank")
+      end
+
+      it 'emailが空では登録できないこと' do
+        @user.email = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email can't be blank")
+      end
+
+      it 'emailが重複している場合無効であること' do
+        FactoryBot.create(:user, email: @user.email)
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Email has already been taken')
+      end
+
+      it 'emailに@が含まれていない場合無効であること' do
+        @user.email = 'invalid_example.com'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Email is invalid')
+      end
+
+      it 'passwordが空では登録できないこと' do
+        @user.password = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password can't be blank")
+      end
+
+      it 'passwordが6文字以上でないと登録できないこと' do
+        @user.password = '12345'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
+      end
+
+      it 'passwordとpassword_confirmationが一致していないと登録できないこと' do
+        @user.password = 'password1'
+        @user.password_confirmation = 'password2'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+
+      it 'passwordが数字のみでは登録できないこと' do
+        @user.password = '123456'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password must include at least one letter and one digit')
+      end
+
+      it 'passwordが全角だと登録できないこと' do
+        @user.password = 'ｐａｓｓｗｏｒｄ１'
+        @user.password_confirmation = 'ｐａｓｓｗｏｒｄ１'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password must include at least one letter and one digit')
       end
 
       it 'passwordが文字と数字を含まない場合無効であること' do
