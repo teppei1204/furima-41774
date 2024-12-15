@@ -55,10 +55,22 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Read first can't be blank")
       end
 
+      it 'read_firstが正しいフォーマットでない場合無効であること' do
+        @user.read_first = 'Yamada'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Read first is invalid')
+      end
+
       it 'read_lastが空では登録できないこと' do
         @user.read_last = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("Read last can't be blank")
+      end
+
+      it 'read_lastが正しいフォーマットでない場合無効であること' do
+        @user.read_last = 'Taro'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Read last is invalid')
       end
 
       it 'emailが空では登録できないこと' do
