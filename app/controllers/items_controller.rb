@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:new, :create, :index]
   def index
-    @items = Item.all
+    @items = Item.includes(:user)
   end
 
   def new
@@ -9,7 +9,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(item_params)
+    @item = current_user.items.new(item_params)
     if @item.save
       redirect_to root_path
     else
@@ -19,7 +19,8 @@ class ItemsController < ApplicationController
 
   private
 
-  def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+  def item_params
+    params.require(:item).permit(:name, :description, :price, :category, :condition, :shipping_cost, :prefecture_id,
+                                 :shipping_day)
   end
 end

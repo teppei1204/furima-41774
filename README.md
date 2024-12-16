@@ -42,7 +42,7 @@
 - has_one : destination
 - belongs_to : product
 
-## products テーブル(商品情報)
+## items テーブル(商品情報)
 
 |    Column          |    Type    | Options     |
 | ------------------ | ---------- | ----------- |
