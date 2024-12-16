@@ -17,8 +17,13 @@ class Item < ApplicationRecord
                 'ハンドメイド', 'その他']
   validates :category, presence: true, inclusion: { in: CATEGORIES }
 
-  validates :shipping_cost_id, presence: true
+  # 配送料の負担が必須であることを設定
+  SHIPPING_COSTS = ['---', '着払い(購入者負担)', '送料込み(出品者負担)']
+  validates :shipping_cost, presence: true, inclusion: { in: SHIPPING_COSTS }
+
+  # 発送までの日数が必須であることを設定
   validates :shipping_day_id, presence: true
+  # 発送元の地域が必須であることを設定
   validates :shipping_id, presence: true
   validates :prefecture_id, presence: true
 
