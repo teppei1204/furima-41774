@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 FactoryBot.define do
   factory :item do
     name { "Test Item" }

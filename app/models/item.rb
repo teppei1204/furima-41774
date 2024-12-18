@@ -1,5 +1,4 @@
 class Item < ApplicationRecord
-  class Item < ApplicationRecord
     belongs_to :user
   
     # 商品画像の追加
@@ -37,5 +36,4 @@ class Item < ApplicationRecord
   
     # 画像が必須であることを設定
     validates :image, presence: true
-  end
 end
