@@ -8,17 +8,12 @@ function setPriceEventListener() {
   priceInput.addEventListener("input", () => {
     const inputValue = priceInput.value;
 
-    if (inputValue >= 300 && inputValue <= 9999999) {
-      const tax = Math.floor(inputValue * 0.1);
-      const profit = inputValue - tax;
+    const tax = Math.floor(inputValue * 0.1);
+    const profit = inputValue - tax;
 
-      addTaxDom.innerHTML = tax.toLocaleString();
-      profitDom.innerHTML = profit.toLocaleString();
-    } else {
-      addTaxDom.innerHTML = '';
-      profitDom.innerHTML = '';
-    }
-  });
+    addTaxDom.innerHTML = tax.toLocaleString();
+    profitDom.innerHTML = profit.toLocaleString();
+});
 }
 
 document.addEventListener('DOMContentLoaded', setPriceEventListener);
