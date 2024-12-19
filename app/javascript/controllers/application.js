@@ -1,9 +1,8 @@
-import { Application } from "@hotwired/stimulus"
+// app/javascript/controllers/application.js
 
-const application = Application.start()
+// インポートその他のスクリプト
+import "../price"; // ここでprice_calculations_controller.jsをインポート
 
-// Configure Stimulus development experience
-application.debug = false
-window.Stimulus   = application
-
-export { application }
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('Application and price_calculations_controller loaded successfully.');
+});
