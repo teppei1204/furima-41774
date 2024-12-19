@@ -7,10 +7,6 @@ class ItemsController < ApplicationController
   def new
     @item = Item.new
     @shipping_costs = ShippingCost.all
-    @categories = Category.all
-    @conditions = Condition.all
-    @prefectures = Prefecture.all
-    @shipping_days = ShippingDay.all
   end
 
   def create
