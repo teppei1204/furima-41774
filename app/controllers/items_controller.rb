@@ -1,12 +1,16 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
   def index
-    # @items = Item.includes(:user)
+    @items = Item.order(created_at: :desc)
   end
 
   def new
     @item = Item.new
     @shipping_costs = ShippingCost.all
+    @categories = Category.all
+    @conditions = Condition.all
+    @prefectures = Prefecture.all
+    @shipping_days = ShippingDay.all
   end
 
   def create
