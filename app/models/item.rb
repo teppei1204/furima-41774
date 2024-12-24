@@ -37,4 +37,8 @@ class Item < ApplicationRecord
 
   # 画像が必須であることを設定
   validates :image, presence: true
+
+  def sold?
+    card.present?
+  end
 end
