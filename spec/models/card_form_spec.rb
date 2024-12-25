@@ -2,24 +2,17 @@ require 'rails_helper'
 
 RSpec.describe CardForm, type: :model do
   before do
-    @user = FactoryBot.create(:user)
-    @item = FactoryBot.create(:item, user: @user)
-    @card_form = CardForm.new(
-      post_code: '123-4567',
-      prefecture_id: 2,
-      city: 'Tokyo',
-      address: '1-1',
-      building_name: 'Tokyo Building',
-      phone_number: '09012345678',
-      token: 'tok_abcdefghijk00000000000000000',
-      user_id: @user.id,
-      item_id: @item.id
-    )
+    @card_form = FactoryBot.build(:card_form)
   end
 
   describe '購入情報の保存' do
     context '内容に問題がない場合' do
       it 'すべての情報が正しく入力されていれば保存できる' do
+        expect(@card_form).to be_valid
+      end
+
+      it '建物名が空でも保存できる' do
+        @card_form.building_name = ''
         expect(@card_form).to be_valid
       end
     end
@@ -34,7 +27,7 @@ RSpec.describe CardForm, type: :model do
       it 'post_codeにハイフンが含まれていないと保存できない' do
         @card_form.post_code = '1234567'
         @card_form.valid?
-        expect(@card_form.errors.full_messages).to include("Post code is invalid. Include hyphen(-)")
+        expect(@card_form.errors.full_messages).to include('Post code is invalid. Include hyphen(-)')
       end
 
       it 'prefecture_idが0では保存できない' do
@@ -64,7 +57,7 @@ RSpec.describe CardForm, type: :model do
       it 'phone_numberが10桁未満では保存できない' do
         @card_form.phone_number = '090123456'
         @card_form.valid?
-        expect(@card_form.errors.full_messages).to include("Phone number is invalid. Must be 10 or 11 digits")
+        expect(@card_form.errors.full_messages).to include('Phone number is invalid. Must be 10 or 11 digits')
       end
 
       it 'tokenが空では保存できない' do
@@ -88,16 +81,16 @@ RSpec.describe CardForm, type: :model do
 
     describe '保存機能のテスト' do
       it '正しい情報が入力されている場合、データベースに保存される' do
-        expect { 
-          @card_form.save 
-        }.to change { Card.count }.by(1).and change { Destination.count }.by(1)
+        expect do
+          @card_form.save
+        end.to change { Card.count }.by(1).and change { Destination.count }.by(1)
       end
 
       it '無効な情報の場合、データベースに保存されない' do
         @card_form.post_code = ''
-        expect { 
-          @card_form.save 
-        }.not_to change { Card.count }
+        expect do
+          @card_form.save
+        end.not_to(change { Card.count })
       end
     end
   end

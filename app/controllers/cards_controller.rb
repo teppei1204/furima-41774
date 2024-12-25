@@ -2,9 +2,9 @@ class CardsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_item_owner, only: [:index, :new, :create]
   before_action :check_item_sold, only: [:index, :new, :create]
+  before_action :set_item, only: [:index, :create]
   def index
-    gon.public_key = 'pk_test_b0d2afc3cd939408a40eab77'
-    @item = Item.find(params[:item_id])
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @card_form = CardForm.new
   end
 
@@ -13,14 +13,13 @@ class CardsController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @card_form = CardForm.new(card_form_params)
     if @card_form.valid?
       pay_item
       @card_form.save
       redirect_to root_path
     else
-      gon.public_key = 'pk_test_b0d2afc3cd939408a40eab77'
+      gon.public_key = ENV['PAYJP_PUBLIC_KEY']
       render :index, status: :unprocessable_entity
     end
   end
@@ -28,9 +27,13 @@ class CardsController < ApplicationController
   private
 
   def card_form_params
-    params.require(:card_form).permit(:post_code, :prefecture_id, :city, :address, :building_name, :phone_number, :price).merge(
+    params.require(:card_form).permit(:post_code, :prefecture_id, :city, :address, :building_name, :phone_number).merge(
       user_id: current_user.id, item_id: params[:item_id], token: params[:token]
     )
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 
   def card_params
