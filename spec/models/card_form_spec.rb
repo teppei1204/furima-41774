@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe CardForm, type: :model do
   before do
-    @card_form = FactoryBot.build(:card_form)
+    user = FactoryBot.create(:user)
+    item = FactoryBot.create(:item)
+    @card_form = FactoryBot.build(:card_form, user_id: user.id, item_id: item.id)
   end
 
   describe '購入情報の保存' do
@@ -54,8 +56,14 @@ RSpec.describe CardForm, type: :model do
         expect(@card_form.errors.full_messages).to include("Phone number can't be blank")
       end
 
-      it 'phone_numberが10桁未満では保存できない' do
-        @card_form.phone_number = '090123456'
+      it 'phone_numberが12桁以上では保存できない' do
+        @card_form.phone_number = '090123456789'
+        @card_form.valid?
+        expect(@card_form.errors.full_messages).to include('Phone number is invalid. Must be 10 or 11 digits')
+      end
+
+      it 'phone_numberに英数字以外が含まれている場合は保存できない' do
+        @card_form.phone_number = '090-1234-567'
         @card_form.valid?
         expect(@card_form.errors.full_messages).to include('Phone number is invalid. Must be 10 or 11 digits')
       end
