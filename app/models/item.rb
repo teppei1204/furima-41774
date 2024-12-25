@@ -1,5 +1,6 @@
 class Item < ApplicationRecord
   belongs_to :user
+  has_one :card
 
   # 商品画像の追加
   has_one_attached :image
@@ -36,4 +37,8 @@ class Item < ApplicationRecord
 
   # 画像が必須であることを設定
   validates :image, presence: true
+
+  def sold?
+    card.present?
+  end
 end

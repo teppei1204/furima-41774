@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :items, dependent: :destroy
+  has_many :cards
 
   # バリデーションの追加
   validates :nick_name, presence: true
