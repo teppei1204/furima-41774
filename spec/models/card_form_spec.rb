@@ -62,6 +62,12 @@ RSpec.describe CardForm, type: :model do
         expect(@card_form.errors.full_messages).to include('Phone number is invalid. Must be 10 or 11 digits')
       end
 
+      it 'phone_numberが9桁以下では保存できない' do
+        @card_form.phone_number = '09012345'
+        @card_form.valid?
+        expect(@card_form.errors.full_messages).to include('Phone number is invalid. Must be 10 or 11 digits without non-numeric characters')
+      end
+
       it 'phone_numberに英数字以外が含まれている場合は保存できない' do
         @card_form.phone_number = '090-1234-567'
         @card_form.valid?
