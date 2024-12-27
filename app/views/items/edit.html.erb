@@ -56,6 +56,8 @@ app/assets/stylesheets/items/new.css %>
       <span class="indispensable">必須</span>
     </div>
     <%= f.collection_select(:condition_id, Condition.all, :id, :name, {}, {class:"select-box", id:"item-condition"}) %>
+    </div>
+    </div>
 
     <%# 配送について %>
     <div class="items-detail">
@@ -137,6 +139,7 @@ app/assets/stylesheets/items/new.css %>
       <div class="sell-btn-contents">
         <%= f.submit "変更する", class: "sell-btn" %>
         <%= link_to 'もどる', item_path(@item), class: "back-btn" %>
+        </div>
       </div>
     <% end %>
 
